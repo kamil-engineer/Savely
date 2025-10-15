@@ -12,3 +12,4 @@ packages/*/dist/
 .vscode/
 .DS_Store
 todo.md
+data.json
