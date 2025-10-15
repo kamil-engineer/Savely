@@ -11,3 +11,4 @@ packages/*/dist/
 # IDE
 .vscode/
 .DS_Store
+todo.md
