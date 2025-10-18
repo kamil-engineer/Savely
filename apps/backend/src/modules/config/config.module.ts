@@ -1,4 +1,4 @@
-import { Global, Module } from '@nestjs/common';
+import { Global, Logger, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
 import { envSchema } from './env.schema';
@@ -13,7 +13,7 @@ import { EnvService } from './env.service';
         const result = envSchema.safeParse(env);
 
         if (!result.success) {
-          console.error('❌ Invalid environment variables:');
+          Logger.error('❌ Invalid environment variables:');
           process.exit(1);
         }
 
