@@ -13,3 +13,4 @@ packages/*/dist/
 .DS_Store
 todo.md
 data.json
+apps/backend/tsconfig.build.tsbuildinfo
