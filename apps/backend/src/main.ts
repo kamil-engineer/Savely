@@ -6,11 +6,13 @@ import { AppModule } from './app.module';
 import { EnvService } from './modules/config/env.service';
 import { AllExceptionsFilter } from './shared/all-exception-filter/all-exception-filter';
 import { LoggerService } from './shared/logger/logger.service';
+import { SwaggerSetupService } from './shared/swagger/swagger.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const logger = app.get(LoggerService);
+  const swagger = app.get(SwaggerSetupService);
 
   const config = app.get(EnvService);
 
@@ -30,6 +32,8 @@ async function bootstrap() {
       },
     }),
   );
+
+  swagger.setup(app);
 
   app.use(
     helmet({

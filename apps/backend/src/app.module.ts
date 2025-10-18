@@ -6,6 +6,7 @@ import { AppConfigModule } from './modules/config/config.module';
 import { PrismaModule } from './modules/prisma/prisma.module';
 import { UsersModule } from './modules/users/users.module';
 import { LoggerModule } from './shared/logger/logger.module';
+import { SwaggerSetupModule } from './shared/swagger/swagger.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { LoggerModule } from './shared/logger/logger.module';
       ],
     }),
     LoggerModule,
+    SwaggerSetupModule,
     PrismaModule,
     UsersModule,
   ],
