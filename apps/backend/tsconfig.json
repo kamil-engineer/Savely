@@ -16,7 +16,8 @@
     "declaration": true,
     "incremental": true,
     "skipLibCheck": true,
-    "strict": true
+    "strict": true,
+    "resolveJsonModule": true
   },
   "include": ["src"],
   "references": [{ "path": "../../packages/shared" }]
