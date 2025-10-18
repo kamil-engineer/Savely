@@ -3,12 +3,19 @@ import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app.module';
 import { EnvService } from './modules/config/env.service';
-import { logger } from './shared/logger/logger';
+import { AllExceptionsFilter } from './shared/all-exception-filter/all-exception-filter';
+import { LoggerService } from './shared/logger/logger.service';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { logger });
+  const app = await NestFactory.create(AppModule);
+
+  const logger = app.get(LoggerService);
 
   const config = app.get(EnvService);
+
+  app.useLogger(logger);
+
+  app.useGlobalFilters(new AllExceptionsFilter(logger));
 
   app.useGlobalPipes(
     new ValidationPipe({
