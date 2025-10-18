@@ -1,5 +1,6 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import helmet from 'helmet';
 
 import { AppModule } from './app.module';
 import { EnvService } from './modules/config/env.service';
@@ -12,6 +13,8 @@ async function bootstrap() {
   const logger = app.get(LoggerService);
 
   const config = app.get(EnvService);
+
+  const isProd = config.get('NODE_ENV') === 'production';
 
   app.useLogger(logger);
 
@@ -27,6 +30,45 @@ async function bootstrap() {
       },
     }),
   );
+
+  app.use(
+    helmet({
+      contentSecurityPolicy: isProd
+        ? {
+            directives: {
+              defaultSrc: ["'self'"],
+              scriptSrc: [
+                "'self'",
+                "'unsafe-inline'",
+                "'unsafe-eval'",
+                'https://savely-frontend.vercel.app',
+              ],
+              styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
+              imgSrc: ["'self'", 'data:', 'https://savely-frontend.vercel.app'],
+              fontSrc: ["'self'", 'https://fonts.gstatic.com'],
+              connectSrc: ["'self'", 'https://savely-frontend.vercel.app'],
+              objectSrc: ["'none'"],
+              upgradeInsecureRequests: [],
+            },
+          }
+        : false,
+      crossOriginEmbedderPolicy: isProd,
+      crossOriginOpenerPolicy: isProd ? { policy: 'same-origin' } : false,
+      crossOriginResourcePolicy: isProd ? { policy: 'same-origin' } : false,
+      referrerPolicy: { policy: 'no-referrer' },
+      frameguard: { action: 'deny' },
+      hsts: isProd ? { maxAge: 31536000, includeSubDomains: true, preload: true } : false,
+      noSniff: true,
+      xssFilter: true,
+    }),
+  );
+
+  app.enableCors({
+    origin: isProd ? ['https://savely-frontend.vercel.app'] : ['http://localhost:3000'],
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  });
 
   await app.listen(config.get('PORT'));
 }
