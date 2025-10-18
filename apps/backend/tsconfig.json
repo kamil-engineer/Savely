@@ -11,14 +11,17 @@
     "target": "ES2020",
     "sourceMap": true,
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": "./",
     "baseUrl": "./",
     "declaration": true,
     "incremental": true,
     "skipLibCheck": true,
     "strict": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "paths": {
+      "src/*": ["src/*"]
+    }
   },
-  "include": ["src"],
+  "include": ["src/**/*", "tests/**/*.ts", "package.json", "cucumber.ts"],
   "references": [{ "path": "../../packages/shared" }]
 }
