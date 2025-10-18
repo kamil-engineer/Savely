@@ -1,0 +1,31 @@
+.link {
+  &:link,
+  &:visited {
+    display: inline-block;
+    text-decoration: none;
+  }
+
+  &--action {
+    &:link,
+    &:visited {
+      line-height: 140%;
+      font-size: var(--font-xs);
+      font-weight: 600;
+      color: var(--color-neutral-900);
+
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    &:hover {
+      color: var(--color-teal-700);
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow:
+        0 0 0 2px var(--color-neutral-0),
+        0 0 0 4px var(--color-teal-700);
+    }
+  }
+}

@@ -1,5 +1,8 @@
-export default function Home() {
-  const div = document.createElement('div');
-  div.innerHTML = `<h1>Home Page</h1><p>Welcome to the Home Page!</p><a href="/about">About Page!</a>`;
-  return div;
+import SignInForm from '../components/SignInForm/SignInFormController';
+
+export default function Home(): HTMLElement {
+  const container = document.createElement('div');
+  container.classList.add('container');
+  container.appendChild(SignInForm());
+  return container;
 }

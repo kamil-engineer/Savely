@@ -1,0 +1,33 @@
+.btn {
+  display: block;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  font-family: inherit;
+
+  &--primary {
+    padding: var(--spacing-150) var(--spacing-175);
+    border-radius: 8px;
+    background-color: var(--color-teal-700);
+    color: var(--color-neutral-0);
+    font-weight: 600;
+    line-height: 140%;
+    font-size: var(--font-sm);
+    box-shadow:
+      inset 0 0 0 2px rgba(255, 255, 255, 12%),
+      0 0 0 1px rgba(34, 38, 39, 12%);
+
+    transition: 0.3s;
+
+    &:focus {
+      outline: none;
+      box-shadow:
+        0 0 0 2px var(--color-neutral-0),
+        0 0 0 4px var(--color-teal-700);
+    }
+
+    &:hover {
+      background-color: var(--color-teal-800);
+    }
+  }
+}
