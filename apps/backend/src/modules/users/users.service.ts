@@ -6,7 +6,9 @@ import { PrismaService } from './../../modules/prisma/prisma.service';
 export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getAllUsers() {
-    return this.prisma.user.findMany();
+  async findByEmail(email: string) {
+    return this.prisma.user.findUnique({
+      where: { email },
+    });
   }
 }

@@ -68,7 +68,7 @@ async function bootstrap() {
   );
 
   app.enableCors({
-    origin: isProd ? ['https://savely-frontend.vercel.app'] : ['http://localhost:3000'],
+    origin: isProd ? ['https://savely-frontend.vercel.app'] : ['http://localhost:5173'],
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization'],
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],

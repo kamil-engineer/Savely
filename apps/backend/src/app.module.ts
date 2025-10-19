@@ -2,8 +2,10 @@ import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { minutes, ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 
+import { AuthModule } from './modules/auth/auth.module';
 import { AppConfigModule } from './modules/config/config.module';
 import { HealthModule } from './modules/health/health.module';
+import { JWTModule } from './modules/jwt/jwt.module';
 import { PrismaModule } from './modules/prisma/prisma.module';
 import { UsersModule } from './modules/users/users.module';
 import { LoggerModule } from './shared/logger/logger.module';
@@ -24,8 +26,10 @@ import { SwaggerSetupModule } from './shared/swagger/swagger.module';
     LoggerModule,
     SwaggerSetupModule,
     PrismaModule,
+    JWTModule,
     UsersModule,
     HealthModule,
+    AuthModule,
   ],
 
   providers: [
