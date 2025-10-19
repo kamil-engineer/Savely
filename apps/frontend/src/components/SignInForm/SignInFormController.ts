@@ -1,19 +1,24 @@
+import { FormValidator } from '../../shared/Form/FormValidator';
+import { emailValidator, minLength, required } from '../../shared/Form/validators';
 import SignInFormView from './SignInForm';
 
+const SIGN_IN_FORM_KEY_ID = 'login-form';
+
 export default function SignInForm(): HTMLElement {
-  const div = SignInFormView();
+  const container = SignInFormView();
 
-  const form = div.querySelector('#sign-in-form') as HTMLFormElement;
+  const form = container.querySelector<HTMLFormElement>(`#${SIGN_IN_FORM_KEY_ID}`);
 
-  const onSubmit = (e: Event) => {
-    e.preventDefault();
-    const email = (form.elements.namedItem('email') as HTMLInputElement).value;
-    const password = (form.elements.namedItem('password') as HTMLInputElement).value;
-    console.log('Sign In', { email, password });
-    alert(`Signed in as ${email}`);
-  };
+  new FormValidator({
+    form,
+    fields: [
+      { id: 'email', validators: [required, emailValidator] },
+      { id: 'password', validators: [required, minLength(6)] },
+    ],
+    onSubmit: (values) => {
+      console.log(values);
+    },
+  });
 
-  form.addEventListener('submit', onSubmit);
-
-  return div;
+  return container;
 }

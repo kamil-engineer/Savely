@@ -1,0 +1,23 @@
+$breakpoints: (
+  sm: 36em,
+);
+
+@mixin respond($breakpoint, $direction: max) {
+  $size: map-get($breakpoints, $breakpoint);
+
+  @if $size == null {
+    @error "❌ Breakpoint `#{$breakpoint}` not found in $breakpoints map.";
+  }
+
+  @if $direction == max {
+    @media (max-width: #{$size}) {
+      @content;
+    }
+  } @else if $direction == min {
+    @media (min-width: #{$size}) {
+      @content;
+    }
+  } @else {
+    @error "❌ Direction must be 'min' or 'max'.";
+  }
+}

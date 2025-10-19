@@ -1,3 +1,5 @@
+@use './../../abstracts/mixins' as *;
+
 .form-container {
   --width: 28rem;
 
@@ -14,6 +16,10 @@
   padding: var(--spacing-500) var(--spacing-400);
   background-color: var(--color-neutral-0);
   box-shadow: 0 2px 4px 0 rgba(21, 21, 21, 6%);
+
+  @include respond(sm) {
+    padding: var(--spacing-400) var(--spacing-250);
+  }
 
   &__overview {
     display: flex;
@@ -112,14 +118,6 @@
       color: var(--color-neutral-800);
     }
 
-    &:invalid {
-      border-color: var(--color-red-800);
-    }
-
-    &:invalid:focus {
-      --local-focus-color: var(--color-red-800);
-    }
-
     &:hover {
       background-color: var(--color-neutral-100);
     }
@@ -129,6 +127,13 @@
       box-shadow:
         0 0 0 2px var(--color-neutral-0),
         0 0 0 4px var(--local-focus-color);
+    }
+
+    &.is-invalid {
+      border-color: var(--color-red-800);
+      &:focus {
+        --local-focus-color: var(--color-red-800);
+      }
     }
   }
 }
