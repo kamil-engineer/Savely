@@ -15,6 +15,7 @@ export class FormValidator {
   private form: HTMLFormElement | null;
   private fields: FieldConfig[];
   private config: FormConfig;
+  private hasSubmitted = false;
 
   constructor(config: FormConfig) {
     this.form = config.form;
@@ -29,6 +30,7 @@ export class FormValidator {
 
     this.form.addEventListener('submit', (ev) => {
       ev.preventDefault();
+      this.hasSubmitted = true;
       this.validateAll();
     });
 
@@ -38,8 +40,16 @@ export class FormValidator {
 
       if (!input || !errorEl) return;
 
-      input.addEventListener('input', () => this.validateField(field, input, errorEl));
-      input.addEventListener('blur', () => this.validateField(field, input, errorEl));
+      input.addEventListener('input', () => {
+        if (this.hasSubmitted) {
+          this.validateField(field, input, errorEl);
+        }
+      });
+      input.addEventListener('blur', () => {
+        if (this.hasSubmitted) {
+          this.validateField(field, input, errorEl);
+        }
+      });
     });
   }
 
