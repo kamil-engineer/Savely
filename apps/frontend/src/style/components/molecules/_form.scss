@@ -66,6 +66,10 @@
   flex-direction: column;
   gap: var(--spacing-175);
 
+  &__container-error {
+    text-align: center;
+  }
+
   &__group {
     position: relative;
     display: flex;

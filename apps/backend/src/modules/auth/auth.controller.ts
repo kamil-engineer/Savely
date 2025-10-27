@@ -5,6 +5,7 @@ import { ErrorResponseDto } from 'src/shared/all-exception-filter/error.dto';
 
 import { EnvService } from '../config/env.service';
 import { AuthService } from './auth.service';
+import { AUTH_CONSTANTS } from './constants/auth.constants';
 import { LoginUserDto } from './dto/login-user.dto';
 import { LoginResponseDto } from './dto/login-user.response.dto';
 
@@ -37,14 +38,14 @@ export class AuthController {
       httpOnly: true,
       secure: isProd,
       sameSite: isProd ? 'none' : 'lax',
-      maxAge: 15 * 60 * 1000,
+      maxAge: AUTH_CONSTANTS.MAX_ACCESS_TOKEN_AGE,
     });
 
     res.cookie('refresh_token', tokens.refresh_token, {
       httpOnly: true,
       secure: isProd,
       sameSite: isProd ? 'none' : 'lax',
-      maxAge: 7 * 24 * 60 * 60 * 1000,
+      maxAge: AUTH_CONSTANTS.MAX_REFRESH_TOKEN_AGE,
     });
 
     return { user };

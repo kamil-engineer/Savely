@@ -45,8 +45,12 @@ export default function SignInFormView(): HTMLElement {
         <span id="password-error" class="form__error" role="alert" aria-live="polite"> </span>
       </div>
 
-      <button type="submit" class="btn btn--primary">Log in</button>
+      <button type="submit" class="btn btn--primary" data-login>Log in</button>
     </form>
+
+    <div class="form__container-error">
+      <p id="form-error" class="form__error" role="alert" aria-live="polite"></p>
+    </div>
 
     <div class="form-container__actions">
       <p class="form-container__action">
