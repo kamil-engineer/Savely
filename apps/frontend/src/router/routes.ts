@@ -25,12 +25,16 @@ export const paths = {
 };
 
 export const routes: Route[] = [
-  { path: paths.HOME, view: Home, title: 'Home' },
-  { path: paths.ABOUT, view: About, title: 'About' },
+  { path: paths.HOME, view: Home, title: 'Home | Savely' },
+  { path: paths.ABOUT, view: About, title: 'About | Savely' },
   {
     path: paths.DASHBOARD,
     view: Dashboard,
-    title: 'Dashboard',
+    title: 'Dashboard | Savely',
   },
-  { path: paths.USER, view: User as (params: Record<string, any>) => HTMLElement, title: 'User' },
+  {
+    path: paths.USER,
+    view: User as (params: Record<string, any>) => HTMLElement,
+    title: 'User | Savely',
+  },
 ];
