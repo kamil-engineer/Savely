@@ -2,8 +2,10 @@ $breakpoints: (
   sm: 36em,
 );
 
+@use 'sass:map';
+
 @mixin respond($breakpoint, $direction: max) {
-  $size: map-get($breakpoints, $breakpoint);
+  $size: map.get($breakpoints, $breakpoint);
 
   @if $size == null {
     @error "❌ Breakpoint `#{$breakpoint}` not found in $breakpoints map.";

@@ -1,4 +1,5 @@
 import About from '../pages/About';
+import Dashboard from '../pages/Dashboard';
 import Home from '../pages/Home';
 import User from '../pages/User';
 
@@ -20,10 +21,16 @@ export const paths = {
   HOME: '/',
   ABOUT: '/about',
   USER: '/user/:id',
+  DASHBOARD: '/dashboard',
 };
 
 export const routes: Route[] = [
   { path: paths.HOME, view: Home, title: 'Home' },
   { path: paths.ABOUT, view: About, title: 'About' },
+  {
+    path: paths.DASHBOARD,
+    view: Dashboard,
+    title: 'Dashboard',
+  },
   { path: paths.USER, view: User as (params: Record<string, any>) => HTMLElement, title: 'User' },
 ];

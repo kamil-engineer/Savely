@@ -2,6 +2,7 @@
 @use './abstracts/mixins' as *;
 @use './base/base' as *;
 @use './components/atoms/logo';
+@use './components/atoms/spinner';
 @use './components/atoms/button';
 @use './components/atoms/link';
 @use './components/molecules/form' as *;

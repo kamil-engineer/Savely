@@ -6,6 +6,11 @@
   font-family: inherit;
 
   &--primary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-100);
+
     padding: var(--spacing-150) var(--spacing-175);
     border-radius: 8px;
     background-color: var(--color-teal-700);
@@ -29,5 +34,35 @@
     &:hover {
       background-color: var(--color-teal-800);
     }
+  }
+
+  &--error {
+    background-color: var(--color-red-700);
+    &:hover {
+      background-color: var(--color-red-800);
+    }
+    &:focus {
+      box-shadow:
+        0 0 0 2px var(--color-neutral-0),
+        0 0 0 4px var(--color-red-700);
+    }
+  }
+
+  &--success {
+    background-color: var(--color-teal-700);
+    &:hover {
+      background-color: var(--color-teal-800);
+    }
+    &:focus {
+      outline: none;
+      box-shadow:
+        0 0 0 2px var(--color-neutral-0),
+        0 0 0 4px var(--color-teal-700);
+    }
+  }
+
+  &__icon {
+    width: var(--spacing-300);
+    height: var(--spacing-300);
   }
 }

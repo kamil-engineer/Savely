@@ -32,21 +32,37 @@ export default function SignInFormView(): HTMLElement {
 
       <div class="form__group">
         <label for="password" class="form__label">Password</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          class="form__input"
-          required
-          aria-required="true"
-          aria-describedby="password-error"
-          autocomplete="current-password"
-        />
+        <div class="form__input-wrapper">
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="form__input"
+            required
+            aria-required="true"
+            aria-describedby="password-error"
+            autocomplete="current-password"
+          />
+          <button
+            type="button"
+            class="btn form__password-toggle"
+            aria-label="Show password"
+            data-password-toggle
+          >
+            <svg class="btn__icon" aria-hidden="true">
+              <use xlink:href="images/sprite.svg#icon-eye"></use>
+            </svg>
+          </button>
+        </div>
         <span id="password-error" class="form__error" role="alert" aria-live="polite"> </span>
       </div>
 
-      <button type="submit" class="btn btn--primary">Log in</button>
+      <button type="submit" class="btn btn--primary" data-login>Log in</button>
     </form>
+
+    <div class="form__container-error">
+      <p id="form-error" class="form__error" role="alert" aria-live="polite"></p>
+    </div>
 
     <div class="form-container__actions">
       <p class="form-container__action">
