@@ -1,5 +1,5 @@
-import { API_URL } from './api';
-import { SignInResponseSchema, type SignInResult } from './schema/LoginSchema';
+import { API_URL } from '../../../services/api';
+import { SignInResponseSchema, type SignInResult } from '../schema/LoginSchema';
 
 export async function handleSignIn(values: Record<string, string>): Promise<SignInResult> {
   try {

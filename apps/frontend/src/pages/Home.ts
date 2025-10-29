@@ -1,4 +1,4 @@
-import SignInForm from '../components/form/SignInForm/SignInFormController';
+import SignInForm from '../features/auth/components/SignInForm/SignInFormController';
 
 export default function Home(): HTMLElement {
   const container = document.createElement('div');

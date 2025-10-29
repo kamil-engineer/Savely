@@ -1,11 +1,13 @@
-import { render } from '../../../router/router';
-import { handleSignIn } from '../../../services/auth-service';
-import { FormValidator } from '../../../shared/Form/FormValidator';
-import { emailValidator, minLength, required } from '../../../shared/Form/validators';
-import { clearError, hideLoader, showError, updateButtonState } from '../helpers/helpers';
+import { render } from '../../../../router/router';
+import { updateButtonState } from '../../../../shared/logic/Form/form.helpers';
+import { FormValidator } from '../../../../shared/logic/Form/FormValidator';
+import { emailValidator, minLength, required } from '../../../../shared/logic/Form/validators';
+import { clearError, hideLoader, showError } from '../../../../shared/ui/ui.helpers';
+import { handleSignIn } from '../../services/auth-service';
 import SignInFormView from './SignInForm';
 
 const SIGN_IN_FORM_KEY_ID = 'login-form';
+
 const SIGN_IN_FORM_ERROR_KEY_ID = 'form-error';
 
 export default function SignInForm(): HTMLElement {
@@ -23,7 +25,11 @@ export default function SignInForm(): HTMLElement {
     ],
     onSubmit: async (data) => {
       clearError(formError);
-      updateButtonState(submitButton, 'loading', 'Logging in');
+      updateButtonState({
+        button: submitButton,
+        state: 'loading',
+        label: 'Logging in',
+      });
 
       const result = await handleSignIn(data);
 
@@ -31,12 +37,20 @@ export default function SignInForm(): HTMLElement {
 
       if (!result.success) {
         showError(formError, result.data.message);
-        updateButtonState(submitButton, 'error', 'Try again');
+        updateButtonState({
+          button: submitButton,
+          state: 'error',
+          label: 'Try again',
+        });
         return;
       }
 
-      if ('user' in result.data) {
-        updateButtonState(submitButton, 'success', 'Welcome back!');
+      if (result.success && result.data.user) {
+        updateButtonState({
+          button: submitButton,
+          state: 'success',
+          label: 'Welcome back!',
+        });
         setTimeout(() => {
           window.history.pushState(null, '', '/dashboard');
           render('/dashboard');
