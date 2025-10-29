@@ -12,13 +12,21 @@ export async function handleSignIn(values: Record<string, string>): Promise<Sign
       body: JSON.stringify(values),
     });
 
+    const contentType = res.headers.get('content-type');
+    if (!contentType || !contentType.includes('application/json')) {
+      return {
+        success: false,
+        data: { message: 'Server is not responding correctly. Please try again later.' },
+      };
+    }
+
     const data = await res.json();
     const parsed = SignInResponseSchema.safeParse(data);
 
     if (!parsed.success) {
       return {
         success: false,
-        data: { message: 'Invalid server response' },
+        data: { message: 'Invalid server response. Please try again later.' },
       };
     }
 
@@ -34,15 +42,25 @@ export async function handleSignIn(values: Record<string, string>): Promise<Sign
       data: parsed.data,
     };
   } catch (err: unknown) {
+    if (err instanceof TypeError && err.message.includes('fetch')) {
+      return {
+        success: false,
+        data: {
+          message: 'Unable to connect to the server. Please check your connection and try again.',
+        },
+      };
+    }
+
     if (err instanceof Error) {
       return {
         success: false,
-        data: { message: err.message },
+        data: { message: 'An unexpected error occurred. Please try again.' },
       };
     }
+
     return {
       success: false,
-      data: { message: 'An unexpected error occurred' },
+      data: { message: 'An unexpected error occurred. Please try again.' },
     };
   }
 }

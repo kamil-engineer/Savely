@@ -1,4 +1,7 @@
-export const showLoader = <T extends HTMLButtonElement | null>(element: T, text: string) => {
+export const showLoader = <T extends HTMLButtonElement | null>(
+  element: T,
+  text: string = 'Loading...',
+) => {
   if (!element) return;
 
   element.disabled = true;
@@ -43,21 +46,35 @@ export function updateButtonState(
   if (!button) return;
 
   button.classList.remove('btn--success', 'btn--error');
+  button.removeAttribute('aria-busy');
+  button.removeAttribute('aria-label');
 
   switch (state) {
     case 'loading':
-      button.innerHTML = `<span class="spinner"></span> ${label ?? 'Loading...'}`;
+      button.setAttribute('aria-busy', 'true');
+      button.setAttribute('aria-label', label ?? 'Loading...');
+      showLoader(button, label);
       break;
     case 'success':
       button.classList.add('btn--success');
-      button.innerHTML = `<span class="icon-check"></span> ${label ?? 'Success!'}`;
+      button.innerHTML = /* HTML */ ` <svg class="form__icon" aria-hidden="true">
+          <use xlink:href="images/sprite.svg#icon-check"></use>
+        </svg>
+        ${label ?? 'Success!'}`;
+      button.setAttribute('aria-label', label ?? 'Success');
       break;
     case 'error':
       button.classList.add('btn--error');
-      button.innerHTML = `<span class="icon-error"></span> ${label ?? 'Try again'}`;
+      button.innerHTML = `
+        <svg class="form__icon" aria-hidden="true">
+          <use xlink:href="images/sprite.svg#icon-close"></use>
+        </svg>
+        ${label ?? 'Try again'}`;
+      button.setAttribute('aria-label', label ?? 'Error');
       break;
     default:
       button.innerHTML = label ?? 'Log in';
       button.disabled = false;
+      button.setAttribute('aria-label', label ?? 'Log in');
   }
 }

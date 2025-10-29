@@ -60,12 +60,9 @@
         0 0 0 4px var(--color-teal-700);
     }
   }
-}
 
-.icon-check::before {
-  content: '✔';
-}
-
-.icon-error::before {
-  content: '✖';
+  &__icon {
+    width: var(--spacing-300);
+    height: var(--spacing-300);
+  }
 }

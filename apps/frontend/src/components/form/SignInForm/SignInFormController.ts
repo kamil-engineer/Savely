@@ -2,13 +2,7 @@ import { render } from '../../../router/router';
 import { handleSignIn } from '../../../services/auth-service';
 import { FormValidator } from '../../../shared/Form/FormValidator';
 import { emailValidator, minLength, required } from '../../../shared/Form/validators';
-import {
-  clearError,
-  hideLoader,
-  showError,
-  showLoader,
-  updateButtonState,
-} from '../helpers/helpers';
+import { clearError, hideLoader, showError, updateButtonState } from '../helpers/helpers';
 import SignInFormView from './SignInForm';
 
 const SIGN_IN_FORM_KEY_ID = 'login-form';
@@ -29,7 +23,7 @@ export default function SignInForm(): HTMLElement {
     ],
     onSubmit: async (data) => {
       clearError(formError);
-      showLoader(submitButton, 'Logging in');
+      updateButtonState(submitButton, 'loading', 'Logging in');
 
       const result = await handleSignIn(data);
 

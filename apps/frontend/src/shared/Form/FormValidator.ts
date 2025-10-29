@@ -23,6 +23,7 @@ export class FormValidator {
     this.config = config;
 
     this.attachEvents();
+    this.setupPasswordToggles();
   }
 
   private attachEvents() {
@@ -50,6 +51,46 @@ export class FormValidator {
           this.validateField(field, input, errorEl);
         }
       });
+    });
+  }
+
+  private setupPasswordToggles() {
+    if (!this.form) return;
+
+    const toggles = this.form.querySelectorAll<HTMLButtonElement>('[data-password-toggle]');
+
+    if (!toggles.length) return;
+
+    const ICONS = {
+      show: 'icon-eye',
+      hide: 'icon-eye-slash',
+    };
+
+    const LABELS = {
+      show: 'Show password',
+      hide: 'Hide password',
+    };
+
+    toggles.forEach((toggleBtn) => {
+      const inputWrapper = toggleBtn.closest('.form__input-wrapper');
+      const passwordInput = inputWrapper?.querySelector<HTMLInputElement>(
+        'input[type="password"], input[type="text"]',
+      );
+      const iconUse = toggleBtn.querySelector<SVGUseElement>('use');
+
+      if (!passwordInput || !iconUse) return;
+
+      const togglePasswordVisibility = () => {
+        const isCurrentlyVisible = passwordInput.type === 'text';
+        passwordInput.type = isCurrentlyVisible ? 'password' : 'text';
+        iconUse.setAttribute(
+          'xlink:href',
+          `images/sprite.svg#${isCurrentlyVisible ? ICONS.show : ICONS.hide}`,
+        );
+        toggleBtn.setAttribute('aria-label', isCurrentlyVisible ? LABELS.show : LABELS.hide);
+      };
+
+      toggleBtn.addEventListener('click', togglePasswordVisibility);
     });
   }
 
