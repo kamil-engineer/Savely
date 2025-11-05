@@ -29,8 +29,8 @@ export const paths = {
 
 export const routes: Route[] = [
   { path: paths.HOME, view: Home, title: 'Home | Savely' },
-  { path: paths.LOGIN, view: Home, title: 'Login | Savely' },
-  { path: paths.REGISTER, view: Register, title: 'Register | Savely' },
+  { path: paths.LOGIN, view: Home, title: 'Login to account | Savely' },
+  { path: paths.REGISTER, view: Register, title: 'Create account | Savely' },
   { path: paths.ABOUT, view: About, title: 'About | Savely' },
   {
     path: paths.DASHBOARD,

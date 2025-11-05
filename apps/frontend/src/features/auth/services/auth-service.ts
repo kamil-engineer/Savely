@@ -1,5 +1,6 @@
 import { API_URL } from '../../../services/api';
 import { SignInResponseSchema, type SignInResult } from '../schema/LoginSchema';
+import { SignUpResponseSchema, type SignUpResult } from '../schema/RegisterSchema';
 
 export async function handleSignIn(values: Record<string, string>): Promise<SignInResult> {
   try {
@@ -34,6 +35,80 @@ export async function handleSignIn(values: Record<string, string>): Promise<Sign
       return {
         success: false,
         data: { message: parsed.data.message.message },
+      };
+    }
+
+    return {
+      success: true,
+      data: parsed.data,
+    };
+  } catch (err: unknown) {
+    if (err instanceof TypeError && err.message.includes('fetch')) {
+      return {
+        success: false,
+        data: {
+          message: 'Unable to connect to the server. Please check your connection and try again.',
+        },
+      };
+    }
+
+    if (err instanceof Error) {
+      return {
+        success: false,
+        data: { message: 'An unexpected error occurred. Please try again.' },
+      };
+    }
+
+    return {
+      success: false,
+      data: { message: 'An unexpected error occurred. Please try again.' },
+    };
+  }
+}
+
+export async function handleSignUp(values: Record<string, string>): Promise<SignUpResult> {
+  try {
+    const res = await fetch(`${API_URL}/auth/sign-up`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify(values),
+    });
+
+    const contentType = res.headers.get('content-type');
+    if (!contentType || !contentType.includes('application/json')) {
+      return {
+        success: false,
+        data: { message: 'Server is not responding correctly. Please try again later.' },
+      };
+    }
+
+    const data = await res.json();
+    const parsed = SignUpResponseSchema.safeParse(data);
+
+    if (!parsed.success) {
+      return {
+        success: false,
+        data: { message: 'Invalid server response. Please try again later.' },
+      };
+    }
+
+    if ('statusCode' in parsed.data) {
+      let message: string = 'An error occurred during registration.';
+
+      if (typeof parsed.data.message === 'string') {
+        message = parsed.data.message;
+      }
+
+      if (typeof parsed.data.message === 'object' && 'message' in parsed.data.message) {
+        message = parsed.data.message.message;
+      }
+
+      return {
+        success: false,
+        data: { message },
       };
     }
 

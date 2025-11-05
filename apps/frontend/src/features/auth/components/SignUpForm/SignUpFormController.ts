@@ -9,7 +9,9 @@ import { updateButtonState } from '../../../../shared/logic/Form/form.helpers';
 import { FormValidator } from '../../../../shared/logic/Form/FormValidator';
 
 import SignUpFormView from './SignUpForm';
-import { clearError } from '../../../../shared/ui/ui.helpers';
+import { clearError, hideLoader, showError } from '../../../../shared/ui/ui.helpers';
+import { handleSignUp } from '../../services/auth-service';
+import { render } from '../../../../router/router';
 
 const REGISTER_IN_FORM_KEY_ID = 'register-form';
 const REGISTER_IN_FORM_ERROR_KEY_ID = 'form-error';
@@ -29,13 +31,39 @@ export default function SignUpForm() {
       { id: 'email', validators: [required, emailValidator] },
       { id: 'password', validators: [required, minLength(6)] },
     ],
-    onSubmit: async () => {
+    onSubmit: async (data) => {
       clearError(formError);
       updateButtonState({
         button: submitButton,
         state: 'loading',
         label: 'Creating your account',
       });
+
+      const result = await handleSignUp(data);
+
+      hideLoader(submitButton);
+
+      if (!result.success) {
+        showError(formError, result.data.message);
+        updateButtonState({
+          button: submitButton,
+          state: 'error',
+          label: 'Try again',
+        });
+        return;
+      }
+
+      if (result.success) {
+        updateButtonState({
+          button: submitButton,
+          state: 'success',
+          label: 'Account created! Log in',
+        });
+        setTimeout(() => {
+          window.history.pushState(null, '', '/login');
+          render('/login');
+        }, 1000);
+      }
     },
   });
 

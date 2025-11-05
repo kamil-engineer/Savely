@@ -33,7 +33,7 @@ export default function SignUpFormView(): HTMLElement {
           aria-required="true"
           aria-describedby="fullName-error"
           autocomplete="name"
-          value="aa bb"
+          value=""
         />
         <span id="fullName-error" class="form__error" role="alert" aria-live="polite"></span>
       </div>
@@ -49,7 +49,7 @@ export default function SignUpFormView(): HTMLElement {
           required
           aria-required="true"
           aria-describedby="email-error"
-          value="email@wp.pl"
+          value=""
         />
         <span id="email-error" class="form__error" role="alert" aria-live="polite"></span>
       </div>
@@ -68,7 +68,7 @@ export default function SignUpFormView(): HTMLElement {
             aria-required="true"
             aria-describedby="password-error"
             autocomplete="current-password"
-            value="asdasd"
+            value=""
           />
           <button
             type="button"
