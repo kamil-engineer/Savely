@@ -43,19 +43,10 @@ export class SwaggerSetupService {
         filter: true,
         tryItOutEnabled: true,
         docExpansion: 'list',
-        syntaxHighlight: {
-          activate: true,
-          theme: 'monokai',
-        },
         defaultModelsExpandDepth: 1,
       },
       customSiteTitle: `Savely API Docs v${SWAGGER_CONSTANTS.version}`,
       customfavIcon: 'https://swagger.io/img/favicon-32x32.png',
-      customCss: `
-        .swagger-ui .topbar { display: none }
-        body { background-color: #111827; color: #f9fafb; }
-        .opblock-summary-method { text-transform: uppercase; font-weight: bold; }
-      `,
     });
   }
 }

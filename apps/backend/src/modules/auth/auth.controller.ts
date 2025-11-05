@@ -8,6 +8,8 @@ import { AuthService } from './auth.service';
 import { AUTH_CONSTANTS } from './constants/auth.constants';
 import { LoginUserDto } from './dto/login-user.dto';
 import { LoginResponseDto } from './dto/login-user.response.dto';
+import { RegisterUserDto } from './dto/register-user.dto';
+import { RegisterResponseDto } from './dto/register-user.response.dto';
 
 @ApiTags('Authentication')
 @Controller('auth')
@@ -49,5 +51,32 @@ export class AuthController {
     });
 
     return { user };
+  }
+
+  @Post('sign-up')
+  @ApiOperation({ summary: 'Register user' })
+  @ApiBody({ type: RegisterUserDto })
+  @ApiResponse({
+    status: 201,
+    description: 'User successfully registered',
+    type: RegisterResponseDto,
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Validation failed (invalid email, password, or full name)',
+    type: ErrorResponseDto,
+  })
+  @ApiResponse({
+    status: 409,
+    description: 'Email already exists',
+    type: ErrorResponseDto,
+  })
+  @ApiResponse({
+    status: 500,
+    description: 'Unexpected server error',
+    type: ErrorResponseDto,
+  })
+  async register(@Body() registerUserDto: RegisterUserDto) {
+    return this.authService.register(registerUserDto);
   }
 }

@@ -21,7 +21,7 @@ export class ErrorResponseDto {
 
   @ApiProperty({
     description: 'Error message or array of messages',
-    example: 'Email is in use',
+    example: 'MESSAGE_OF_ERROR',
     type: [String],
   })
   message!: string | string[];
