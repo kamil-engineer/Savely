@@ -1,5 +1,6 @@
 export const AUTH_ERROR_CONSTANTS = {
   INVALID_CREDENTIALS: 'Incorrect password or email.',
+  EMAIL_EXISTS: 'This email already exists.',
 };
 
 export const AUTH_CONSTANTS = {
