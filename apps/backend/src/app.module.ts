@@ -10,6 +10,7 @@ import { PrismaModule } from './modules/prisma/prisma.module';
 import { UsersModule } from './modules/users/users.module';
 import { LoggerModule } from './shared/logger/logger.module';
 import { SwaggerSetupModule } from './shared/swagger/swagger.module';
+import { MailModule } from './modules/mail/mail.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { SwaggerSetupModule } from './shared/swagger/swagger.module';
     LoggerModule,
     SwaggerSetupModule,
     PrismaModule,
+    MailModule,
     JWTModule,
     UsersModule,
     HealthModule,
