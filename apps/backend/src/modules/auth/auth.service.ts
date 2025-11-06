@@ -8,12 +8,14 @@ import { LoginUserDto } from './dto/login-user.dto';
 import { plainToInstance } from 'class-transformer';
 import { LoginResponseDto } from './dto/login-user.response.dto';
 import { RegisterUserDto } from './dto/register-user.dto';
+import { MailService } from '../mail/mail.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userService: UsersService,
     private readonly jwtService: JWTService,
+    private readonly mailService: MailService,
   ) {}
   async login({ email, password }: LoginUserDto) {
     const user = await this.userService.findByEmail(email);
@@ -56,6 +58,8 @@ export class AuthService {
       fullName,
       password: hashedPassword,
     });
+
+    await this.mailService.sendWelcomeEmail('naskret.kamil@gmail.com', 'Kamil BB');
 
     return createdUser;
   }
