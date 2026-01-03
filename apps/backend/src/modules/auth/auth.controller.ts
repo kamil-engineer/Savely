@@ -1,7 +1,7 @@
 import { Body, Controller, Post, Res } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
-import { ErrorResponseDto } from 'src/shared/all-exception-filter/error.dto';
+import { ErrorResponseDto } from './../../shared/all-exception-filter/error.dto';
 
 import { EnvService } from '../config/env.service';
 import { AuthService } from './auth.service';

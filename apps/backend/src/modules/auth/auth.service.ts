@@ -59,7 +59,7 @@ export class AuthService {
       password: hashedPassword,
     });
 
-    await this.mailService.sendWelcomeEmail('naskret.kamil@gmail.com', 'Kamil BB');
+    await this.mailService.sendWelcomeEmail(email, fullName);
 
     return createdUser;
   }
