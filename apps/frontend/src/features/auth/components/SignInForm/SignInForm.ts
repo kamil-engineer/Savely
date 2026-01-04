@@ -66,7 +66,7 @@ export default function SignInFormView(): HTMLElement {
 
     <div class="form-container__actions">
       <p class="form-container__action">
-        Forgot password? <a href="/reset" class="link link--action">Reset it</a>
+        Forgot password? <a href="/forgot-password" class="link link--action">Reset it</a>
       </p>
       <p class="form-container__action">
         Don't have an account? <a href="/register" class="link link--action">Sign up</a>
