@@ -80,11 +80,12 @@ export class MailService {
   }
 
   async sendResetPasswordEmail(email: string, resetLink: string) {
-    await this.mailQueue.add('send-mail', {
-      to: email,
-      subject: 'Reset your password 🔑',
-      template: 'reset-password',
-      context: { resetLink },
-    });
+    return this.sendMailToQueue(
+      'reset-password',
+      email,
+      'Reset your password 🔑',
+      { resetLink },
+      2,
+    );
   }
 }

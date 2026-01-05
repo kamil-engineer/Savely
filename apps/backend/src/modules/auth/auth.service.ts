@@ -9,6 +9,9 @@ import { plainToInstance } from 'class-transformer';
 import { LoginResponseDto } from './dto/login-user.response.dto';
 import { RegisterUserDto } from './dto/register-user.dto';
 import { MailService } from '../mail/mail.service';
+import { ForgotPasswordDto } from './dto/forgot-password.dto';
+import { PasswordResetService } from './password-reset/password-reset.service';
+import { env } from '../config/env';
 
 @Injectable()
 export class AuthService {
@@ -16,6 +19,7 @@ export class AuthService {
     private readonly userService: UsersService,
     private readonly jwtService: JWTService,
     private readonly mailService: MailService,
+    private readonly passwordResetService: PasswordResetService,
   ) {}
   async login({ email, password }: LoginUserDto) {
     const user = await this.userService.findByEmail(email);
@@ -62,5 +66,23 @@ export class AuthService {
     await this.mailService.sendWelcomeEmail(email, fullName);
 
     return createdUser;
+  }
+
+  async forgotPassword({ email }: ForgotPasswordDto) {
+    const user = await this.userService.findByEmail(email);
+
+    if (user) {
+      await this.passwordResetService.invalidateTokens(user.id);
+
+      const token = await this.passwordResetService.createToken(user.id);
+
+      const link = `${env.APP_URL}reset-password?token=${token}`;
+
+      await this.mailService.sendResetPasswordEmail(user.email, link);
+    }
+
+    return {
+      message: 'If an account with this email exists, a reset link has been sent.',
+    };
   }
 }
