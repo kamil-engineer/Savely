@@ -1,4 +1,4 @@
-export type ValidatorFn = (value: string) => string | null;
+export type ValidatorFn = (value: string, parent?: HTMLFormElement) => string | null;
 
 const required: ValidatorFn = (value) => (value.trim() === '' ? 'This field is required.' : null);
 
@@ -9,6 +9,16 @@ const minLength =
   (length: number): ValidatorFn =>
   (value) =>
     value.length < length ? `Must be at least ${length} characters.` : null;
+
+export function matchField(otherFieldId: string, fieldName: string): ValidatorFn {
+  return (value: string, form?: HTMLFormElement) => {
+    if (!form) return null;
+    const otherInput = form.querySelector<HTMLInputElement>(`#${otherFieldId}`);
+    if (!otherInput) return null;
+
+    return value === otherInput.value ? null : `This field must match ${fieldName}`;
+  };
+}
 
 const fullNameValidator: ValidatorFn = (value) => {
   const trimmed = value.trim();

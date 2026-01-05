@@ -19,7 +19,7 @@ function getParams(route: Route, path: string) {
   return params;
 }
 
-function getQueryParams(search: string): Record<string, string> {
+export function getQueryParams(search: string): Record<string, string> {
   const query: Record<string, string> = {};
   const params = new URLSearchParams(search);
   params.forEach((value, key) => (query[key] = value));

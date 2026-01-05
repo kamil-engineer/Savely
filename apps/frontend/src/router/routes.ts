@@ -2,6 +2,7 @@ import ForgotPassword from '../pages/ForgotPassword';
 import Dashboard from '../pages/Dashboard';
 import Home from '../pages/Home';
 import Register from '../pages/Register';
+import ChangePassword from '../pages/ChangePassword';
 
 export interface RouteWithParams {
   path: string;
@@ -33,6 +34,7 @@ export const routes: Route[] = [
   { path: paths.LOGIN, view: Home, title: 'Login to account | Savely' },
   { path: paths.REGISTER, view: Register, title: 'Create account | Savely' },
   { path: paths.FORGOT_PASSWORD, view: ForgotPassword, title: 'Forgot password | Savely' },
+  { path: paths.RESET_PASSWORD, view: ChangePassword, title: 'Change password | Savely' },
   {
     path: paths.DASHBOARD,
     view: Dashboard,

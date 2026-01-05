@@ -95,11 +95,13 @@ export class FormValidator {
   }
 
   private validateField(field: FieldConfig, input: HTMLInputElement, errorEl: HTMLElement) {
+    if (!this.form) return;
+
     const value = input.value.trim();
     let errorMessage: string | null = null;
 
     for (const validator of field.validators) {
-      const result = validator(value);
+      const result = validator(value, this.form);
       if (result) {
         errorMessage = result;
         break;
