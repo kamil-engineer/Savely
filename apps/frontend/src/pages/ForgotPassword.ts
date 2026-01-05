@@ -1,4 +1,4 @@
-import ForgotPasswordForm from '../features/user/components/ForgotPasswordForm/ForgotPasswordFormController';
+import ForgotPasswordForm from '../features/auth/components/ForgotPasswordForm/ForgotPasswordFormController';
 
 export default function ForgotPassword(): HTMLElement {
   const container = document.createElement('div');
