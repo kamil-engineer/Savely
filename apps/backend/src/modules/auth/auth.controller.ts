@@ -10,8 +10,11 @@ import { LoginUserDto } from './dto/login-user.dto';
 import { LoginResponseDto } from './dto/login-user.response.dto';
 import { RegisterUserDto } from './dto/register-user.dto';
 import { RegisterResponseDto } from './dto/register-user.response.dto';
-import { ForgotPasswordDto } from './dto/forgot-password.dto';
-import { ForgotPasswordResponseDto } from './dto/forgot-password.response.dto';
+import { ForgotPasswordDto } from './password-reset/dto/forgot-password.dto';
+import { ForgotPasswordResponseDto } from './password-reset/dto/forgot-password.response.dto';
+import { ResetPasswordDto } from './password-reset/dto/reset-password.dto';
+import { ResetPasswordSuccessDto } from './password-reset/dto/reset-password.response.dto';
+import { Throttle } from '@nestjs/throttler';
 
 @ApiTags('Authentication')
 @Controller('auth')
@@ -82,6 +85,7 @@ export class AuthController {
     return this.authService.register(registerUserDto);
   }
 
+  @Throttle({ default: { limit: 3, ttl: 86400 } })
   @Post('forgot-password')
   @ApiOperation({ summary: 'Request password reset.' })
   @ApiBody({ type: ForgotPasswordDto })
@@ -92,5 +96,18 @@ export class AuthController {
   })
   async forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto) {
     return this.authService.forgotPassword(forgotPasswordDto);
+  }
+
+  @Throttle({ default: { limit: 3, ttl: 86400 } })
+  @Post('reset-password')
+  @ApiOperation({ summary: 'Reset user password using a valid token' })
+  @ApiBody({ type: ResetPasswordDto })
+  @ApiResponse({
+    status: 200,
+    description: 'Password successfully reset',
+    type: ResetPasswordSuccessDto,
+  })
+  async resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
+    return this.authService.resetPassword(resetPasswordDto);
   }
 }

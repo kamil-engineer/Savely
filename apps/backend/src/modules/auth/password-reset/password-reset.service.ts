@@ -30,4 +30,20 @@ export class PasswordResetService {
 
     return rawToken;
   }
+
+  async findToken(token: string) {
+    const resetToken = await this.prisma.passwordResetToken.findFirst({
+      where: { tokenHash: token, usedAt: null, expiresAt: { gt: new Date() } },
+      include: { user: true },
+    });
+
+    if (resetToken) return resetToken;
+  }
+
+  async markTokenUsed(tokenId: string) {
+    await this.prisma.passwordResetToken.update({
+      where: { id: tokenId },
+      data: { usedAt: new Date() },
+    });
+  }
 }

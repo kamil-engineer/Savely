@@ -1,4 +1,9 @@
-import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 
 import { JWTService } from '../jwt/jwt.service';
@@ -9,9 +14,11 @@ import { plainToInstance } from 'class-transformer';
 import { LoginResponseDto } from './dto/login-user.response.dto';
 import { RegisterUserDto } from './dto/register-user.dto';
 import { MailService } from '../mail/mail.service';
-import { ForgotPasswordDto } from './dto/forgot-password.dto';
+import { ForgotPasswordDto } from './password-reset/dto/forgot-password.dto';
 import { PasswordResetService } from './password-reset/password-reset.service';
 import { env } from '../config/env';
+import { ResetPasswordDto } from './password-reset/dto/reset-password.dto';
+import { hashToken } from '../../utils/crypto';
 
 @Injectable()
 export class AuthService {
@@ -84,5 +91,23 @@ export class AuthService {
     return {
       message: 'If an account with this email exists, a reset link has been sent.',
     };
+  }
+
+  async resetPassword({ password, confirmPassword, token }: ResetPasswordDto) {
+    if (password !== confirmPassword) {
+      throw new BadRequestException('Passwords do not match');
+    }
+
+    const tokenRecord = await this.passwordResetService.findToken(hashToken(token));
+
+    if (!tokenRecord) {
+      throw new BadRequestException('Invalid or exipred token');
+    }
+
+    await this.userService.updatePassword(tokenRecord.userId, password);
+
+    await this.passwordResetService.markTokenUsed(tokenRecord.id);
+
+    return { message: 'Password successfully reset' };
   }
 }
