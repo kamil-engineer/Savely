@@ -3,7 +3,7 @@ import { WelcomeMailDto } from '../dto/welcome-mail.dto';
 
 export const MailTemplateMap = {
   welcome: WelcomeMailDto,
-  resetPassword: ResetPasswordMailDto,
+  ['reset-password']: ResetPasswordMailDto,
 } as const;
 
 export type TemplateName = keyof typeof MailTemplateMap;

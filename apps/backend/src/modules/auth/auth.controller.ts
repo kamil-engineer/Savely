@@ -10,6 +10,8 @@ import { LoginUserDto } from './dto/login-user.dto';
 import { LoginResponseDto } from './dto/login-user.response.dto';
 import { RegisterUserDto } from './dto/register-user.dto';
 import { RegisterResponseDto } from './dto/register-user.response.dto';
+import { ForgotPasswordDto } from './dto/forgot-password.dto';
+import { ForgotPasswordResponseDto } from './dto/forgot-password.response.dto';
 
 @ApiTags('Authentication')
 @Controller('auth')
@@ -78,5 +80,17 @@ export class AuthController {
   })
   async register(@Body() registerUserDto: RegisterUserDto) {
     return this.authService.register(registerUserDto);
+  }
+
+  @Post('forgot-password')
+  @ApiOperation({ summary: 'Request password reset.' })
+  @ApiBody({ type: ForgotPasswordDto })
+  @ApiResponse({
+    status: 200,
+    description: 'Reset email sent if account exists',
+    type: ForgotPasswordResponseDto,
+  })
+  async forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto) {
+    return this.authService.forgotPassword(forgotPasswordDto);
   }
 }
