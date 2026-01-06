@@ -7,7 +7,6 @@ import {
 import * as bcrypt from 'bcrypt';
 
 import { JWTService } from '../jwt/jwt.service';
-import { UsersService } from '../users/users.service';
 import { AUTH_ERROR_CONSTANTS } from './constants/auth.constants';
 import { LoginUserDto } from './dto/login-user.dto';
 import { plainToInstance } from 'class-transformer';
@@ -19,6 +18,7 @@ import { PasswordResetService } from './password-reset/password-reset.service';
 import { env } from '../config/env';
 import { ResetPasswordDto } from './password-reset/dto/reset-password.dto';
 import { hashToken } from '../../utils/crypto';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class AuthService {

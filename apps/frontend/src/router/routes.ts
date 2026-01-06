@@ -1,8 +1,4 @@
-import ForgotPassword from '../pages/ForgotPassword';
-import Dashboard from '../pages/Dashboard';
-import Home from '../pages/Home';
-import Register from '../pages/Register';
-import ChangePassword from '../pages/ChangePassword';
+import { ChangePassword, Dashboard, ForgotPassword, Home, Register } from '@frontend/pages';
 
 export interface RouteWithParams {
   path: string;

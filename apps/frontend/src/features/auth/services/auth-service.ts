@@ -1,11 +1,14 @@
-import { getQueryParams } from '../../../router/router';
-import { API_URL } from '../../../services/api';
+import { getQueryParams } from '@frontend/router/router';
+import { API_URL } from '@frontend/services/api';
+
 import {
+  SignUpResponseSchema,
   ForgotPasswordResponseSchema,
+  SignInResponseSchema,
+  type SignUpResult,
+  type SignInResult,
   type ForgotPasswordResult,
-} from '../schema/ForgotPasswordSchema';
-import { SignInResponseSchema, type SignInResult } from '../schema/LoginSchema';
-import { SignUpResponseSchema, type SignUpResult } from '../schema/RegisterSchema';
+} from '@frontend/features/auth/schema';
 
 export async function handleSignIn(values: Record<string, string>): Promise<SignInResult> {
   try {

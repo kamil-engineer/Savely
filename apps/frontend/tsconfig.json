@@ -22,7 +22,10 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "@frontend/*": ["src/*"]
+    }
   },
   "include": ["src"],
   "references": [{ "path": "../../packages/shared" }]

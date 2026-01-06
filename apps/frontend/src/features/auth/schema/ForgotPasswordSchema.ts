@@ -1,4 +1,4 @@
-import { HttpStatusSchema } from './../../../shared/types/http';
+import { HttpStatusSchema } from '@frontend/shared/types';
 import z from 'zod';
 
 export const ForgotPasswordSuccessSchema = z.object({
