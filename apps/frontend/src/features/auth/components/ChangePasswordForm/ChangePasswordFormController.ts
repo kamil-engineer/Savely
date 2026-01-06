@@ -1,9 +1,11 @@
 import { matchField, minLength, required } from '../../../../shared/logic/Form/validators';
 import { FormValidator } from '../../../../shared/logic/Form/FormValidator';
 
-import { clearError } from '../../../../shared/ui/ui.helpers';
+import { clearError, hideLoader, showError } from '../../../../shared/ui/ui.helpers';
 import { updateButtonState } from '../../../../shared/logic/Form/form.helpers';
 import ChangePasswordFormView from './ChangePasswordForm';
+import { handleResetPassword } from '../../services/auth-service';
+import { render } from '../../../../router/router';
 
 const CHANGE_PASSWORD_FORM_KEY_ID = 'change-password-form';
 const FORGOT_PASSWORD_FORM_ERROR_KEY_ID = 'form-error';
@@ -30,7 +32,7 @@ export default function ChangePasswordForm(): HTMLElement {
       },
     ],
 
-    onSubmit: async () => {
+    onSubmit: async (values) => {
       clearError(formError);
 
       updateButtonState({
@@ -38,6 +40,32 @@ export default function ChangePasswordForm(): HTMLElement {
         state: 'loading',
         label: 'Resetting...',
       });
+
+      const result = await handleResetPassword(values);
+
+      hideLoader(submitButton);
+
+      if (!result.success) {
+        showError(formError, result.data.message);
+        updateButtonState({
+          button: submitButton,
+          state: 'error',
+          label: 'Try again',
+        });
+        return;
+      }
+
+      if (result.success) {
+        updateButtonState({
+          button: submitButton,
+          state: 'success',
+          label: 'Password successfully reset!',
+        });
+        setTimeout(() => {
+          window.history.pushState(null, '', '/');
+          render('/');
+        }, 1000);
+      }
     },
   });
 
