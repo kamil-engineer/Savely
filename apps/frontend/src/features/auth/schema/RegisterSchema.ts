@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { HttpStatusSchema } from '../../../shared/types/http';
+import { HttpStatusSchema } from '@frontend/shared/types';
 
 export const SignUpSuccessSchema = z.object({
   id: z.number(),

@@ -1,10 +1,15 @@
-import { render } from '../../../../router/router';
-import { updateButtonState } from '../../../../shared/logic/Form/form.helpers';
-import { FormValidator } from '../../../../shared/logic/Form/FormValidator';
-import { emailValidator, minLength, required } from '../../../../shared/logic/Form/validators';
-import { clearError, hideLoader, showError } from '../../../../shared/ui/ui.helpers';
-import { handleSignIn } from '../../services/auth-service';
+import { clearError, hideLoader, showError } from '@frontend/shared/ui';
+import { handleSignIn } from '@frontend/features/auth/services/auth-service';
 import SignInFormView from './SignInForm';
+
+import {
+  FormValidator,
+  updateButtonState,
+  minLength,
+  required,
+  emailValidator,
+} from '@frontend/shared/logic/Form';
+import { render } from '@frontend/router/router';
 
 const SIGN_IN_FORM_KEY_ID = 'login-form';
 

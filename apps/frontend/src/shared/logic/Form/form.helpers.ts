@@ -1,4 +1,4 @@
-import { hideLoader, showLoader } from '../../ui/ui.helpers';
+import { hideLoader, showLoader } from '@frontend/shared/ui';
 
 type ButtonState = 'idle' | 'loading' | 'success' | 'error';
 

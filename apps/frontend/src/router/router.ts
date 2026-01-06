@@ -1,4 +1,4 @@
-import NotFound from '../pages/NotFound';
+import { NotFound } from '@frontend/pages';
 import { type Route, routes } from './routes';
 
 const app = document.getElementById('app');
@@ -66,7 +66,7 @@ export function render(pathWithQuery: string) {
     animateRender(element);
     document.title = route.title || 'Home';
   } else {
-    animateRender(NotFound());
+    animateRender(NotFound() as HTMLElement);
     document.title = '404 Not Found';
   }
 

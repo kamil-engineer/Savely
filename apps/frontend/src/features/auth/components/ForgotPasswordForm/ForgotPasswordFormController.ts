@@ -1,9 +1,13 @@
-import { emailValidator, required } from '../../../../shared/logic/Form/validators';
-import { FormValidator } from '../../../../shared/logic/Form/FormValidator';
+import { clearError } from '@frontend/shared/ui';
+import { handleForgotPassword } from '@frontend/features/auth/services/auth-service';
+
+import {
+  FormValidator,
+  updateButtonState,
+  required,
+  emailValidator,
+} from '@frontend/shared/logic/Form';
 import ForgotPasswordFormView from './ForgotPasswordForm';
-import { clearError } from '../../../../shared/ui/ui.helpers';
-import { updateButtonState } from '../../../../shared/logic/Form/form.helpers';
-import { handleForgotPassword } from '../../services/auth-service';
 
 const FORGOT_PASSWORD_FORM_KEY_ID = 'forgot-password-form';
 const FORGOT_PASSWORD_FORM_ERROR_KEY_ID = 'form-error';

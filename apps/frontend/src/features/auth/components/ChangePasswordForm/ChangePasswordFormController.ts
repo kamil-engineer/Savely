@@ -1,11 +1,15 @@
-import { matchField, minLength, required } from '../../../../shared/logic/Form/validators';
-import { FormValidator } from '../../../../shared/logic/Form/FormValidator';
+import { clearError, hideLoader, showError } from '@frontend/shared/ui';
+import { handleResetPassword } from '@frontend/features/auth/services/auth-service';
 
-import { clearError, hideLoader, showError } from '../../../../shared/ui/ui.helpers';
-import { updateButtonState } from '../../../../shared/logic/Form/form.helpers';
+import {
+  FormValidator,
+  updateButtonState,
+  minLength,
+  required,
+  matchField,
+} from '@frontend/shared/logic/Form';
+import { render } from '@frontend/router/router';
 import ChangePasswordFormView from './ChangePasswordForm';
-import { handleResetPassword } from '../../services/auth-service';
-import { render } from '../../../../router/router';
 
 const CHANGE_PASSWORD_FORM_KEY_ID = 'change-password-form';
 const FORGOT_PASSWORD_FORM_ERROR_KEY_ID = 'form-error';
