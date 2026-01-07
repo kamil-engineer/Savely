@@ -9,6 +9,12 @@ export const SignUpSuccessSchema = z.object({
   createdAt: z.string(),
 });
 
+export const SignUpDtoSchema = z.object({
+  email: z.string().email(),
+  fullName: z.string(),
+  password: z.string(),
+});
+
 export const SignUpErrorSchema = z.object({
   statusCode: HttpStatusSchema,
   path: z.string(),
@@ -29,6 +35,7 @@ export const SignUpResponseSchema = z.union([SignUpSuccessSchema, SignUpErrorSch
 export type SignUpSuccess = z.infer<typeof SignUpSuccessSchema>;
 export type SignUpError = z.infer<typeof SignUpErrorSchema>;
 export type SignUpResponse = z.infer<typeof SignUpResponseSchema>;
+export type SignUpDto = z.infer<typeof SignUpDtoSchema>;
 
 export type SignUpResult =
   | { success: true; data: SignUpSuccess }

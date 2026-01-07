@@ -12,6 +12,7 @@ import { render } from '@frontend/router/router';
 import { handleSignUp } from '@frontend/features/auth/services/auth-service';
 
 import { clearError, hideLoader, showError } from '@frontend/shared/ui';
+import { SignUpDtoSchema } from '@frontend/features/auth/schema';
 
 const REGISTER_IN_FORM_KEY_ID = 'register-form';
 const REGISTER_IN_FORM_ERROR_KEY_ID = 'form-error';
@@ -33,13 +34,21 @@ export default function SignUpForm() {
     ],
     onSubmit: async (data) => {
       clearError(formError);
+
       updateButtonState({
         button: submitButton,
         state: 'loading',
         label: 'Creating your account',
       });
 
-      const result = await handleSignUp(data);
+      const parsed = SignUpDtoSchema.safeParse(data);
+
+      if (!parsed.success) {
+        showError(formError, 'Invalid form data');
+        return;
+      }
+
+      const result = await handleSignUp(parsed.data);
 
       hideLoader(submitButton);
 

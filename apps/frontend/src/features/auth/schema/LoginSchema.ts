@@ -9,6 +9,11 @@ export const SignInSuccessSchema = z.object({
   }),
 });
 
+export const SignInDtoSchema = z.object({
+  email: z.string().email(),
+  password: z.string(),
+});
+
 export const SignInErrorSchema = z.object({
   statusCode: HttpStatusSchema,
   path: z.string(),
@@ -24,6 +29,7 @@ export const SignInResponseSchema = z.union([SignInSuccessSchema, SignInErrorSch
 export type SignInSuccess = z.infer<typeof SignInSuccessSchema>;
 export type SignInError = z.infer<typeof SignInErrorSchema>;
 export type SignInResponse = z.infer<typeof SignInResponseSchema>;
+export type SignInDto = z.infer<typeof SignInDtoSchema>;
 
 export type SignInResult =
   | { success: true; data: SignInSuccess }

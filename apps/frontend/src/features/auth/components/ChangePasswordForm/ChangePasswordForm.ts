@@ -57,7 +57,7 @@ export default function ChangePasswordFormView(): HTMLElement {
           <input
             type="password"
             id="confirm-password"
-            name="confirm-password"
+            name="confirmPassword"
             class="form__input"
             required
             aria-required="true"

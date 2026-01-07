@@ -10,6 +10,7 @@ import {
   emailValidator,
 } from '@frontend/shared/logic/Form';
 import { render } from '@frontend/router/router';
+import { SignInDtoSchema } from '../../schema';
 
 const SIGN_IN_FORM_KEY_ID = 'login-form';
 
@@ -36,7 +37,14 @@ export default function SignInForm(): HTMLElement {
         label: 'Logging in',
       });
 
-      const result = await handleSignIn(data);
+      const parsed = SignInDtoSchema.safeParse(data);
+
+      if (!parsed.success) {
+        showError(formError, 'Invalid form data');
+        return;
+      }
+
+      const result = await handleSignIn(parsed.data);
 
       hideLoader(submitButton);
 

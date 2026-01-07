@@ -1,4 +1,4 @@
-import { clearError } from '@frontend/shared/ui';
+import { clearError, showError } from '@frontend/shared/ui';
 import { handleForgotPassword } from '@frontend/features/auth/services/auth-service';
 
 import {
@@ -8,6 +8,7 @@ import {
   emailValidator,
 } from '@frontend/shared/logic/Form';
 import ForgotPasswordFormView from './ForgotPasswordForm';
+import { ForgotPasswordDtoSchema } from '../../schema';
 
 const FORGOT_PASSWORD_FORM_KEY_ID = 'forgot-password-form';
 const FORGOT_PASSWORD_FORM_ERROR_KEY_ID = 'form-error';
@@ -39,7 +40,14 @@ export default function ForgotPasswordForm(): HTMLElement {
         label: 'Checking your email...',
       });
 
-      const result = await handleForgotPassword(data);
+      const parsed = ForgotPasswordDtoSchema.safeParse(data);
+
+      if (!parsed.success) {
+        showError(formError, 'Invalid form data');
+        return;
+      }
+
+      const result = await handleForgotPassword(parsed.data);
 
       if (result.data) {
         updateButtonState({
