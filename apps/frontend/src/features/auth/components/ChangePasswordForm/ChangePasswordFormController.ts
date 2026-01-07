@@ -10,6 +10,7 @@ import {
 } from '@frontend/shared/logic/Form';
 import { render } from '@frontend/router/router';
 import ChangePasswordFormView from './ChangePasswordForm';
+import { ResetPasswordDtoSchema } from '../../schema/ResetPasswordSchema';
 
 const CHANGE_PASSWORD_FORM_KEY_ID = 'change-password-form';
 const FORGOT_PASSWORD_FORM_ERROR_KEY_ID = 'form-error';
@@ -36,7 +37,7 @@ export default function ChangePasswordForm(): HTMLElement {
       },
     ],
 
-    onSubmit: async (values) => {
+    onSubmit: async (data) => {
       clearError(formError);
 
       updateButtonState({
@@ -45,7 +46,14 @@ export default function ChangePasswordForm(): HTMLElement {
         label: 'Resetting...',
       });
 
-      const result = await handleResetPassword(values);
+      const parsed = ResetPasswordDtoSchema.safeParse(data);
+
+      if (!parsed.success) {
+        showError(formError, 'Invalid form data');
+        return;
+      }
+
+      const result = await handleResetPassword(parsed.data);
 
       hideLoader(submitButton);
 

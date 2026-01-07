@@ -8,9 +8,13 @@ import {
   type SignUpResult,
   type SignInResult,
   type ForgotPasswordResult,
+  type SignUpDto,
+  type SignInDto,
+  type ForgotPasswordDto,
 } from '@frontend/features/auth/schema';
+import type { ResetPasswordDto, ResetPasswordResult } from '../schema/ResetPasswordSchema';
 
-export async function handleSignIn(values: Record<string, string>): Promise<SignInResult> {
+export async function handleSignIn(values: SignInDto): Promise<SignInResult> {
   try {
     const res = await fetch(`${API_URL}/auth/sign-in`, {
       method: 'POST',
@@ -74,7 +78,7 @@ export async function handleSignIn(values: Record<string, string>): Promise<Sign
   }
 }
 
-export async function handleResetPassword(values: Record<string, string>) {
+export async function handleResetPassword(values: ResetPasswordDto): Promise<ResetPasswordResult> {
   try {
     const queryParams = getQueryParams(window.location.search);
     const token = queryParams.token;
@@ -86,7 +90,7 @@ export async function handleResetPassword(values: Record<string, string>) {
       },
       body: JSON.stringify({
         password: values.password,
-        confirmPassword: values['confirm-password'],
+        confirmPassword: values.confirmPassword,
         token,
       }),
     });
@@ -145,7 +149,7 @@ export async function handleResetPassword(values: Record<string, string>) {
 }
 
 export async function handleForgotPassword(
-  values: Record<string, string>,
+  values: ForgotPasswordDto,
 ): Promise<ForgotPasswordResult> {
   try {
     const res = await fetch(`${API_URL}/auth/forgot-password`, {
@@ -209,7 +213,7 @@ export async function handleForgotPassword(
   }
 }
 
-export async function handleSignUp(values: Record<string, string>): Promise<SignUpResult> {
+export async function handleSignUp(values: SignUpDto): Promise<SignUpResult> {
   try {
     const res = await fetch(`${API_URL}/auth/sign-up`, {
       method: 'POST',
