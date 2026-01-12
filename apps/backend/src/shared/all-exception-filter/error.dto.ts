@@ -1,28 +1,30 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class ErrorResponseDto {
-  @ApiProperty({
-    description: 'HTTP status code',
-    example: 400,
-  })
+  @ApiProperty({ description: 'HTTP status code' })
   statusCode!: number;
+
+  @ApiProperty({ description: 'Error type' })
+  error!: string;
+
+  @ApiProperty({
+    description: 'Error message',
+  })
+  message!: string;
 
   @ApiProperty({
     description: 'Timestamp of the error',
-    example: '2025-08-19T20:13:20.170Z',
   })
   timestamp!: string;
 
-  @ApiProperty({
-    description: 'The path where the error occurred',
-    example: '/auth/register',
-  })
+  @ApiProperty({ description: 'Request path' })
   path!: string;
 
   @ApiProperty({
-    description: 'Error message or array of messages',
-    example: 'MESSAGE_OF_ERROR',
+    required: false,
+
+    description: 'Validation errors (if applicable)',
     type: [String],
   })
-  message!: string | string[];
+  details?: string[];
 }
